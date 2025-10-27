@@ -85,13 +85,24 @@ def get_patient(patient_id):
     conn.close()
     return jsonify(patient)
 
-@patients_bp.route('/api/data/upload', methods=['POST'])
+@patients_bp.route('/api/data/upload', methods=['POST', 'OPTIONS'])
 def upload_data():
     """Upload CSV file with patient data"""
+    # Handle preflight request
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'ok'}), 200
+    
+    print("Upload request received")
+    print("Files:", request.files)
+    print("Form:", request.form)
+    
     if 'file' not in request.files:
+        print("Error: No file in request")
         return jsonify({'error': 'No file provided'}), 400
     
     file = request.files['file']
+    print(f"File received: {file.filename}")
+    
     if file.filename == '':
         return jsonify({'error': 'No file selected'}), 400
     
@@ -172,6 +183,9 @@ def upload_data():
         })
     
     except Exception as e:
+        print(f"Upload error: {str(e)}")
+        import traceback
+        traceback.print_exc()
         return jsonify({'error': str(e)}), 500
 
 @patients_bp.route('/api/ml/train', methods=['POST'])

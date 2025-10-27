@@ -26,7 +26,9 @@ export default function DataUpload() {
       setUploadStatus('uploading')
       setMessage('Uploading...')
       
+      console.log('Uploading file:', file.name)
       const response = await patientsAPI.uploadCSV(file)
+      console.log('Upload response:', response.data)
       
       setUploadStatus('success')
       setMessage(`Successfully uploaded ${response.data.recordsProcessed} records!`)
@@ -37,8 +39,10 @@ export default function DataUpload() {
       }, 2000)
     } catch (error) {
       setUploadStatus('error')
-      setMessage('Error uploading file. Please check the format and try again.')
+      const errorMsg = error.response?.data?.error || error.message || 'Unknown error'
+      setMessage(`Error: ${errorMsg}`)
       console.error('Upload error:', error)
+      console.error('Error response:', error.response)
     }
   }
 
