@@ -67,7 +67,8 @@ export default function DataUpload() {
       setUploadStatus('uploading')
       setMessage('Calculating risk scores...')
       
-      const response = await fetch('http://localhost:5000/api/patients/calculate-risks', {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+      const response = await fetch(`${API_URL}/api/patients/calculate-risks`, {
         method: 'POST'
       })
       const data = await response.json()
@@ -90,7 +91,8 @@ export default function DataUpload() {
       setUploadStatus('uploading')
       setMessage('Training ML model... This may take a moment.')
       
-      const response = await fetch('http://localhost:5000/api/ml/train', {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+      const response = await fetch(`${API_URL}/api/ml/train`, {
         method: 'POST'
       })
       const data = await response.json()

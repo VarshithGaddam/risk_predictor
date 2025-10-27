@@ -9,12 +9,13 @@ from routes.predict import predict_bp
 from routes.notes import notes_bp
 
 app = Flask(__name__)
-CORS(app, origins=[
-    'http://localhost:3000',
-    'http://localhost:5173',
-    'https://risk-predictor.vercel.app',
-    'https://*.vercel.app'
-])
+CORS(app, resources={
+    r"/*": {
+        "origins": "*",
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization"]
+    }
+})
 
 # Configuration
 app.config['DATABASE'] = 'healthcare.db'

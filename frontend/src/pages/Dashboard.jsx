@@ -25,13 +25,14 @@ export default function Dashboard() {
 
   const fetchData = async () => {
     try {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
       const [metricsRes, distRes, ageRes, diagRes, timelineRes, riskAgeRes] = await Promise.all([
         dashboardAPI.getMetrics(),
         dashboardAPI.getRiskDistribution(),
-        axios.get('http://localhost:5000/api/dashboard/age-distribution'),
-        axios.get('http://localhost:5000/api/dashboard/diagnosis-breakdown'),
-        axios.get('http://localhost:5000/api/dashboard/admissions-timeline'),
-        axios.get('http://localhost:5000/api/dashboard/risk-by-age')
+        axios.get(`${API_URL}/api/dashboard/age-distribution`),
+        axios.get(`${API_URL}/api/dashboard/diagnosis-breakdown`),
+        axios.get(`${API_URL}/api/dashboard/admissions-timeline`),
+        axios.get(`${API_URL}/api/dashboard/risk-by-age`)
       ])
       setMetrics(metricsRes.data)
       setDistribution(distRes.data)

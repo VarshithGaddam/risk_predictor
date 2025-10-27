@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || (
   import.meta.env.MODE === 'production' 
-    ? 'https://your-backend-url.onrender.com' 
+    ? 'https://risk-predictor-qvom.onrender.com' 
     : 'http://localhost:5000'
 )
 
